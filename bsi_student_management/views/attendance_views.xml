@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- List View -->
+    <record id="view_bsi_attendance_list" model="ir.ui.view">
+        <field name="name">bsi.attendance.list</field>
+        <field name="model">bsi.attendance</field>
+        <field name="arch" type="xml">
+            <list string="Attendance" editable="bottom">
+                <field name="student_id"/>
+                <field name="date"/>
+                <field name="status"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_bsi_attendance_form" model="ir.ui.view">
+        <field name="name">bsi.attendance.form</field>
+        <field name="model">bsi.attendance</field>
+        <field name="arch" type="xml">
+            <form string="Attendance">
+                <sheet>
+                    <group>
+                        <field name="student_id"/>
+                        <field name="date"/>
+                        <field name="status"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_bsi_attendance_search" model="ir.ui.view">
+        <field name="name">bsi.attendance.search</field>
+        <field name="model">bsi.attendance</field>
+        <field name="arch" type="xml">
+            <search>
+
+                <field name="student_id"/>
+                <field name="date"/>
+
+                <filter
+                    name="present"
+                    string="Present"
+                    domain="[('status','=','present')]"/>
+
+                <filter
+                    name="absent"
+                    string="Absent"
+                    domain="[('status','=','absent')]"/>
+
+                <group>
+
+                    <filter
+                        name="group_student"
+                        string="Student"
+                        context="{'group_by':'student_id'}"/>
+
+                    <filter
+                        name="group_status"
+                        string="Status"
+                        context="{'group_by':'status'}"/>
+
+                </group>
+
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_bsi_attendance" model="ir.actions.act_window">
+        <field name="name">Attendance</field>
+        <field name="res_model">bsi.attendance</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_bsi_attendance_search"/>
+    </record>
+
+</odoo>

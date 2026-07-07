@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="restaurant_order_list_view" model="ir.ui.view">
+        <field name="name">restaurant.order.list</field>
+        <field name="model">restaurant.order</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="order_no"/>
+                <field name="customer_id"/>
+                <field name="table_id"/>
+                <field name="order_datetime"/>
+                <field name="status"/>
+                <field name="total_amount" widget= "monetary" options="{'curency_field':'currency_id'}"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="restaurant_order_form_view" model="ir.ui.view">
+        <field name="name">restaurant.order.form</field>
+        <field name="model">restaurant.order</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_calculate_total"
+                            string="Calculate Total"
+                            type="object"
+                            class="btn-primary"/>
+                    <field name="status" widget="statusbar" statusbar_visible="draft,confirmed,preparing,served,paid"/>
+                </header>
+                <sheet>
+
+                    <group>
+                        <group>
+                            <field name="order_no"/>
+                            <field name="customer_id"/>
+                            <field name="table_id"/>
+                        </group>
+
+                        <group>
+                            <field name="order_datetime"/>
+                            <field name="status"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+
+                        <page string="Order Items">
+
+                            <field name="order_line_ids">
+                                <list editable="bottom">
+                                    <field name="menu_id"/>
+                                    <field name="quantity"/>
+                                    <field name="price" widget= "monetary" options="{'curency_field':'currency_id'}"/>
+                                    <field name="subtotal"/>
+                                </list>
+                            </field>
+
+                        </page>
+
+                        <page string="Notes">
+                            <field name="note"/>
+                        </page>
+
+                    </notebook>
+
+                    <group>
+                        <field name="total_amount" readonly="1"/>
+                    </group>
+
+                </sheet>
+                <chatter>
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </chatter>
+            </form>
+        </field>
+    </record>
+
+    <record id="restaurant_order_kanban_view" model="ir.ui.view">
+        <field name="name">restaurant.order.kanban</field>
+        <field name="model">restaurant.order</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="status">
+
+                <field name="order_no"/>
+                <field name="customer_id"/>
+                <field name="table_id"/>
+                <field name="total_amount"/>
+                <field name="status"/>
+
+                <templates>
+                    <t t-name="card">
+
+                        <div class="oe_kanban_card">
+
+                            <strong>
+                                <field name="order_no"/>
+                            </strong>
+                            <br/>
+
+                            Customer :
+                            <field name="customer_id"/>
+                            <br/>
+
+                            Table :
+                            <field name="table_id"/>
+                            <br/>
+
+                            Total :
+                            ₹ <field name="total_amount"/>
+                            <br/>
+                            <field name="status" widget="badge"/>
+
+                        </div>
+                    </t>
+                </templates>
+
+            </kanban>
+        </field>
+    </record>
+
+
+    <record id="restaurant_order_calendar_view" model="ir.ui.view">
+        <field name="name">restaurant.order.calendar</field>
+        <field name="model">restaurant.order</field>
+        <field name="arch" type="xml">
+            <calendar
+                string="Restaurant Orders"
+                date_start="order_datetime"
+                color="status">
+
+                <field name="order_no"/>
+                <field name="customer_id"/>
+                <field name="table_id"/>
+                <field name="status"/>
+
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_restaurant_order_activity" model="ir.ui.view">
+        <field name="name">restaurant.order.activity</field>
+        <field name="model">restaurant.order</field>
+        <field name="arch" type="xml">
+            <activity string="Restaurant Orders">
+                <templates>
+                    <div t-name="activity-box">
+                        <field name="customer_id" muted="1"/>
+                            <div>
+                                Order <field name="order_no"/> — Table <field name="table_id"/>
+                            </div>
+                    </div>
+                </templates>
+            </activity>
+        </field>
+    </record>
+
+    <record id="restaurant_order_pivot_view" model="ir.ui.view">
+        <field name="name">restaurant.order.pivot</field>
+        <field name="model">restaurant.order</field>
+        <field name="arch" type="xml">
+            <pivot string="Restaurant Orders">
+                <field name="customer_id" type="row"/>
+                <field name="table_id" type="col"/>
+                <field name="total_amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="restaurant_order_graph_view" model="ir.ui.view">
+        <field name="name">restaurant.order.graph</field>
+        <field name="model">restaurant.order</field>
+        <field name="arch" type="xml">
+            <graph string="Restaurant Orders" type="bar">
+                <field name="customer_id"/>
+                <field name="total_amount" type="measure"/>
+            </graph>
+            <!-- <graph string="Restaurant Orders" type="line">
+                <field name="customer_id"/>
+                <field name="total_amount" type="measure"/>
+            </graph>
+            <graph string="Restaurant Orders" type="pie">
+                <field name="customer_id"/>
+                <field name="total_amount" type="measure"/>
+            </graph> -->
+        </field>
+    </record>
+
+</odoo>

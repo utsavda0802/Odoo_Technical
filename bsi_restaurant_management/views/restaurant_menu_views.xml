@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="restaurant_menu_list_view" model="ir.ui.view">
+        <field name="name">restaurant.menu.list</field>
+        <field name="model">restaurant.menu</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="price"/>
+                <field name="is_available" widget= "boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="restaurant_menu_form_view" model="ir.ui.view">
+        <field name="name">restaurant.menu.form</field>
+        <field name="model">restaurant.menu</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="category_id"/>
+                        <field name="tag_ids" widget="many2many_tags"/>
+                        <field name="price" widget= "monetary" options="{'curency_field':'currency_id'}"/>
+                        <field name="is_available" widget= "boolean_toggle"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="restaurant_menu_kanban_view" model="ir.ui.view">
+        <field name ="name">restaurant.menu.kanban</field>
+        <field name ="model">restaurant.menu</field>
+        <field name ="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="price"/>
+                <field name="category_id"/>
+                <field name="is_available"/>
+
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card">
+                            <div class="oe_kanban_details">
+                                <strong>
+                                    <field name="name"/>
+                                </strong>
+                                <br />
+
+                                <span>
+                                    Category:
+                                    <field name="category_id"/>
+                                </span>
+                                <br />
+                                <span>
+                                    Price:
+                                    <field name="price"/>
+                                </span>
+                                <br />
+                                <span>
+                                    Available:
+                                    <field name="is_available" widget="boolean_toggle"/>
+                                </span>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+</odoo>

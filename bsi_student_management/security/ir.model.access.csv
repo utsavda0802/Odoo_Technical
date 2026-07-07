@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bsi_student,bsi.student,model_bsi_student,base.group_user,1,1,1,1
+access_bsi_course,bsi.course,model_bsi_course,base.group_user,1,1,1,1
+access_bsi_subject,bsi.subject,model_bsi_subject,base.group_user,1,1,1,1
+access_bsi_attendance,bsi.attendance,model_bsi_attendance,base.group_user,1,1,1,1

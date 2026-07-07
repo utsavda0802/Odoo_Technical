@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="restaurant_customer_list_view" model="ir.ui.view">
+        <field name="name">restaurant.customer.list</field>
+        <field name="model">restaurant.customer</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="mobile" widget="phone"/>
+                <field name="email" widget="email"/>
+                <field name="is_regular"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="restaurant_customer_form_view" model="ir.ui.view">
+        <field name="name">restaurant.customer.form</field>
+        <field name="model">restaurant.customer</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="mobile" widget="phone"/>
+                        <field name="email" widget="email"/>
+                        <field name="address"/>
+                        <field name="is_regular"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="restaurant_customer_kanban_view" model="ir.ui.view">
+        <field name="name">restaurant.customer.kanban</field>
+        <field name="model">restaurant.customer</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card">
+                            <strong>
+                                <field name="name"/>
+                            </strong>
+                            <br/>
+                            Phone: <field name="mobile"/>
+                            <br/>
+                            Email: <field name="email"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+</odoo>

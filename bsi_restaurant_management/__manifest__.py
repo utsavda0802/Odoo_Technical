@@ -1,0 +1,21 @@
+{
+    'name': 'Restaurant Management System',
+    'version': '19.0.1.0.0',
+    'category': 'Restaurant',
+    'summary': '',
+    'author': 'Botspot Infoware',
+    'depends': ['base','mail',],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/restaurant_table_views.xml',
+        'views/restaurant_category_views.xml',
+        'views/restaurant_tag_views.xml',
+        'views/restaurant_menu_views.xml',
+        'views/restaurant_customer_views.xml',
+        'views/restaurant_order_views.xml',
+        'views/restaurant_menu.xml',
+    ],
+    'license': 'OPL-1',
+    'installable': True,
+    'application': True,
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_bsi_root" name="Student Management" sequence="10"/>
+
+    <menuitem id="menu_bsi_student" name="Students"
+              parent="menu_bsi_root" action="action_bsi_student" sequence="10"/>
+    <menuitem id="menu_bsi_course" name="Courses"
+              parent="menu_bsi_root" action="action_bsi_course" sequence="20"/>
+    <menuitem id="menu_bsi_subject" name="Subjects"
+              parent="menu_bsi_root" action="action_bsi_subject" sequence="30"/>
+    <menuitem id="menu_bsi_attendance" name="Attendance"
+              parent="menu_bsi_root" action="action_bsi_attendance" sequence="40"/>
+</odoo>

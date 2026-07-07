@@ -1,0 +1,20 @@
+{
+    'name': 'Student Management',
+    'version': '19.0.1.0.0',
+    'category': 'Education',
+    'summary': 'Manage Student Records',
+    'author': 'Utsav Dave',
+    'depends': ['base'],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/sequence_data.xml',
+        'views/student_views.xml',
+        'views/course_views.xml',
+        'views/subject_views.xml',
+        'views/attendance_views.xml',
+        'views/menu_views.xml',
+    ],
+    'license': 'OPL-1',
+    'installable': True,
+    'application': True,
+}

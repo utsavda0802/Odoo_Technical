@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bsi_student,bsi.student,model_bsi_student,base.group_user,1,1,1,1
+bsi_student_management_19.access_bsi_std,access_bsi_std,bsi_student_management_19.model_bsi_std,base.group_user,1,1,1,1
+bsi_student_management_19.access_bsi_teacher,access_bsi_teacher,bsi_student_management_19.model_bsi_teacher,base.group_user,1,1,1,1

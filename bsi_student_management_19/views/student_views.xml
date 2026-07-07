@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- List View -->
+    <record id="view_bsi_student_list" model="ir.ui.view">
+        <field name="name">bsi.student.list</field>
+        <field name="model">bsi.student</field>
+        <field name="arch" type="xml">
+            <list string="Students">
+                <field name="enrollment_no"/>
+                <field name="name"/>
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="email"/>
+                <field name="joining_date"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_bsi_student_form" model="ir.ui.view">
+        <field name="name">bsi.student.form</field>
+        <field name="model">bsi.student</field>
+        <field name="arch" type="xml">
+            <form string="Student">
+                <sheet>
+
+                    <group>
+                        <group>
+                            <field name="enrollment_no"/>
+                            <field name="name"/>
+                            <field name="age"/>
+                            <field name="gender"/>
+                        </group>
+
+                        <group>
+                            <field name="email"/>
+                            <field name="phone"/>
+                            <field name="joining_date"/>
+                            <field name="active"/>
+                        </group>
+
+                        <group>
+                            <field name="fees"/>
+                            <field name="std_id" />
+                            <field name="teacher_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+<!-- Search View -->
+    <record id="view_bsi_student_search" model="ir.ui.view">
+        <field name="name">bsi.student.search</field>
+        <field name="model">bsi.student</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="email"/>
+
+                <filter
+                    name="active"
+                    string="Active"
+                    domain="[('active','=',True)]"/>
+
+                <group>
+                    <filter
+                        name="group_gender"
+                        string="Gender"
+                        context="{'group_by':'gender'}"/>
+                </group>
+
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_bsi_student" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="res_model">bsi.student</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_bsi_student_search"/>
+    </record>
+
+    <!-- Root Menu -->
+    <menuitem
+        id="menu_student_root"
+        name="Student Management System"
+        sequence="10"/>
+
+    <!-- Student Menu -->
+    <menuitem
+        id="menu_student"
+        name="Students"
+        parent="menu_student_root"
+        action="action_bsi_student"
+        sequence="1"/>
+
+
+</odoo>
