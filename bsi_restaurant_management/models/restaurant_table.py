@@ -7,3 +7,4 @@ class RestaurantTable(models.Model) :
 	name = fields.Char(string = 'Table Number' , required = True)
 	capacity = fields.Integer(string = 'Capacity' , required = True)
 	is_available = fields.Boolean(string = 'Available' ,default = 'True')
+

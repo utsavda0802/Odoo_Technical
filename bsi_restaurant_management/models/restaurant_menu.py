@@ -7,7 +7,7 @@ class RestaurantMenu(models.Model):
 	name = fields.Char(required = True)
 	description = fields.Text()
 
-	price = fields.Float(string = 'Price')
+	price = fields.Float(string = 'Price',required=True)
 
 	is_available = fields.Boolean(string = 'Available' , default = True)
 
