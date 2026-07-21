@@ -5,4 +5,5 @@ class Teacher(models.Model):
     _description = 'Teacher'
 
     name = fields.Char(string='Name', required=True)
+    exp = fields.Integer(string="Exp")
     

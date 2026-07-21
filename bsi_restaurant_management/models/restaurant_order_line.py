@@ -26,3 +26,11 @@ class RestaurantOrderLine(models.Model):
         for line in self:
             if line.quantity <= 0:
                 raise ValidationError("Quantity must be greater than zero.")
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('menu_id') and not vals.get('price'):
+                menu = self.env['restaurant.menu'].browse(vals['menu_id'])
+                vals['price'] = menu.price
+        return super().create(vals_list)

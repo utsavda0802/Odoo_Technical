@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
             <list string="Standard">
                 <field name="name"/>
+                <field name="teacher_count" />
             </list>
         </field>
     </record>
@@ -21,6 +22,7 @@
                 <sheet>
                     <group>
                         <field name="name"/>
+                        <field name="teacher_count" />
                         <field name="student_ids">
                             <list>
                                 <field name="name" />

@@ -1,0 +1,38 @@
+<odoo>
+    <record id="view_partner_form_rental_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.rental.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_rentals" type="object" 
+                        class="oe_stat_button" icon="fa-suitcase" 
+                        invisible="rental_count == 0">
+                    <field name="rental_count" widget="statinfo" string="Rentals"/>
+                </button>
+            </div>
+
+        </field>
+    </record>
+
+    <record id="view_partner_form_rental_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.rental.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_rentals" type="object"
+                        class="oe_stat_button" icon="fa-suitcase"
+                        invisible="rental_count == 0">
+                    <field name="rental_count" widget="statinfo" string="Rentals"/>
+                </button>
+            </div>
+            <field name="name" position="after">
+                <field name="is_rental_customer"/>
+            </field>
+
+        </field>
+    </record>
+
+</odoo>
+

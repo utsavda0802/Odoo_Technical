@@ -1,0 +1,20 @@
+{
+    'name': 'Equipment Rental Management',
+    'version': '19.0.1.0.0',
+    'category': 'Services/Rental',
+    'summary': 'Manage rental orders for cameras, drones, projectors, tools',
+    'author': 'Utsav Dave',
+    'depends': ['base', 'mail', 'contacts', 'sale'],
+    'data': [
+        'data/rental_sequence.xml',
+        'security/ir.model.access.csv',
+        'views/rental_equipment_views.xml',
+        'views/rental_order_views.xml',
+        'views/rental_handover_views.xml',
+        'views/res_partner_views.xml',
+        'views/rental_menu.xml',
+    ],
+    'license': 'OPL-1',
+    'installable': True,
+    'application': True,
+}

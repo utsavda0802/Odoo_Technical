@@ -30,6 +30,7 @@
                         <group>
                             <field name="enrollment_no"/>
                             <field name="name"/>
+                            <field name="t_count" />
                             <field name="age"/>
                             <field name="gender"/>
                         </group>

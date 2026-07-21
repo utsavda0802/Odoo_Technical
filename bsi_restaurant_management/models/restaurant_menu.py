@@ -14,3 +14,4 @@ class RestaurantMenu(models.Model):
 	category_id = fields.Many2one('restaurant.category' , string = 'Category')
 
 	tag_ids = fields.Many2many('restaurant.tag' , string = 'Tags')
+

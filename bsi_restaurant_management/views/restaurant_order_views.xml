@@ -26,6 +26,10 @@
                             string="Calculate Total"
                             type="object"
                             class="btn-primary"/>
+                    <button name="action_orm_methods"
+                            string="See orm methods"
+                            type="object"
+                            class="btn-primary"/>
                     <field name="status" widget="statusbar" statusbar_visible="draft,confirmed,preparing,served,paid"/>
                 </header>
                 <sheet>

@@ -1,4 +1,5 @@
-from odoo import models,fields
+from odoo import models,fields, api
+from odoo.exceptions import ValidationError
 
 class Student(models.Model):
     _name = 'bsi.student'
@@ -20,3 +21,25 @@ class Student(models.Model):
 
     std_id = fields.Many2one("bsi.std", string="Standard")
     teacher_ids = fields.Many2many("bsi.teacher", string="Teachers")
+    # t_count = fields.Integer(related="std_id.teacher_count" ,string="Teacher Count")
+    # t_count = fields.Integer(string="Teacher Count", compute="compute_t_count")
+    t_count = fields.Integer(string="Teacher Count")
+
+    @api.constrains('enrollment_no')
+    def check_enrollment_no(self):
+        for rec in self:
+            if len(rec.enrollment_no) > 10:
+                raise ValidationError("The Enrollment Number should be under 10 character")
+
+    @api.onchange('teacher_ids')
+    def compute_t_count(self):
+        for rec in self:
+            count = self.env['bsi.teacher'].search_count([])
+
+
+            # count = 0
+            # for record in rec.teacher_ids:
+            #     count += 1
+            # rec.t_count = count
+            # rec.std_id.teacher_count = count
+

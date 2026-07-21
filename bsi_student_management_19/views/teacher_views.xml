@@ -6,8 +6,9 @@
         <field name="name">bsi.teacher.list</field>
         <field name="model">bsi.teacher</field>
         <field name="arch" type="xml">
-            <list string="Standard">
+            <list string="Teacher">
                 <field name="name"/>
+                <field name="exp"/>
             </list>
         </field>
     </record>
@@ -17,12 +18,13 @@
         <field name="name">bsi.teacher.form</field>
         <field name="model">bsi.teacher</field>
         <field name="arch" type="xml">
-            <form string="Student">
+            <form string="Teacher">
                 <sheet>
 
                     <group>
                         <group>
                             <field name="name"/>
+                            <field name="exp"/>
                         </group>
                     </group>
                 </sheet>
