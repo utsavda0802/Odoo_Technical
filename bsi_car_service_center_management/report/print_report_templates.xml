@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_job_card_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Job Card: <span t-field="o.name"/></h2>
+
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <strong>Customer:</strong> <span t-field="o.customer_id.name"/><br/>
+                                <strong>Phone:</strong> <span t-field="o.customer_id.phone"/><br/>
+                                <strong>Car:</strong> <span t-field="o.vehicle_id.make"/>
+                                <span t-field="o.vehicle_id.model"/>
+                                (<span t-field="o.vehicle_id.license_plate"/>)
+                            </div>
+                            <div class="col-6">
+                                <strong>Mechanic:</strong> <span t-field="o.mechanic_id.name"/><br/>
+                                <strong>Arrival Date:</strong> <span t-field="o.arrival_date"/><br/>
+                                <strong>Expected Delivery:</strong> <span t-field="o.expected_delivery_date"/><br/>
+                                <strong>Status:</strong> <span t-field="o.state"/>
+                            </div>
+                        </div>
+
+                        <p class="mt-3">
+                            <strong>Problem Description:</strong><br/>
+                            <span t-field="o.problem_description"/>
+                        </p>
+
+                        <table class="table table-sm mt-3">
+                            <thead>
+                                <tr>
+                                    <th>Spare Part</th>
+                                    <th>Qty</th>
+                                    <th>Unit Price</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.part_line_ids" t-as="line">
+                                    <td><span t-field="line.part_id.name"/></td>
+                                    <td><span t-field="line.quantity"/></td>
+                                    <td><span t-field="line.unit_price"/></td>
+                                    <td><span t-field="line.subtotal"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-sm" style="width: 300px; margin-left: auto;">
+                            <tr>
+                                <td>Parts Total</td>
+                                <td><span t-field="o.parts_total"/></td>
+                            </tr>
+                            <tr>
+                                <td>Labor Charges</td>
+                                <td><span t-field="o.labor_charges"/></td>
+                            </tr>
+                            <tr>
+                                <td>Discount %</td>
+                                <td><span t-field="o.discount_percent"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Total Amount</strong></td>
+                                <td><strong><span t-field="o.total_amount"/></strong></td>
+                            </tr>
+                            <tr>
+                                <td>Advance Paid</td>
+                                <td><span t-field="o.advance_paid"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Balance Due</strong></td>
+                                <td><strong><span t-field="o.balance_due"/></strong></td>
+                            </tr>
+                        </table>
+
+                        <t t-set="current_invoice" t-value="o.invoice_ids.sorted(key=lambda i: i.id, reverse=True)[:1]"/>
+                        <t t-set="past_invoices" t-value="o.env['job.invoice'].search([
+                            ('customer_id', '=', o.customer_id.id),
+                            ('vehicle_id', '=', o.vehicle_id.id),
+                            ('id', 'not in', current_invoice.ids),
+                        ])"/>
+
+                        <h4 class="mt-4">Current Invoice</h4>
+                        <table class="table table-sm" t-if="current_invoice">
+                            <thead>
+                                <tr><th>ID</th><th>Name</th><th>Discount %</th><th>Total</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="current_invoice" t-as="inv_c">
+                                    <td><span t-esc="inv_c.id"/></td>
+                                    <td><span t-field="inv_c.name"/></td>
+                                    <td><span t-field="inv_c.discount_percent"/></td>
+                                    <td><span t-field="inv_c.total"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p t-if="not current_invoice">No invoice created yet.</p>
+
+                        <h4 class="mt-4">Past Invoices (same customer &amp; car)</h4>
+                        <table class="table table-sm" t-if="past_invoices">
+                            <thead>
+                                <tr><th>ID</th><th>Name</th><th>Discount %</th><th>Total</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="past_invoices" t-as="inv_p">
+                                    <td><span t-esc="inv_p.id"/></td>
+                                    <td><span t-field="inv_p.name"/></td>
+                                    <td><span t-field="inv_p.discount_percent"/></td>
+                                    <td><span t-field="inv_p.total"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p t-if="not past_invoices">No past invoices for this customer's car.</p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

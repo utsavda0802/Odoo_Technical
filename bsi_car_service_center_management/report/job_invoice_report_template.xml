@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_job_invoice_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Invoice: <span t-field="o.name"/></h2>
+
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <strong>Customer:</strong> <span t-field="o.customer_id.name"/><br/>
+                                <strong>Car:</strong> <span t-field="o.vehicle_id.make"/>
+                                <span t-field="o.vehicle_id.model"/>
+                                (<span t-field="o.vehicle_id.license_plate"/>)<br/>
+                                <strong>Mechanic:</strong> <span t-field="o.mechanic_id.name"/><br/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Job Card:</strong> <span t-field="o.job_id.name"/><br/>
+                                <strong>Arrival Date:</strong> <span t-field="o.arrival_date"/><br/>
+                                <strong>Expected Delivery:</strong> <span t-field="o.expected_delivery_date"/><br/>
+                                <strong>Invoice Date:</strong> <span t-field="o.invoice_date"/><br/>
+                            </div>
+                        </div>
+                        <table class="table table-sm mt-3">
+                            <thead>
+                                <tr>
+                                    <th>Spare Part</th>
+                                    <th>Qty</th>
+                                    <th>Unit Price</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.line_ids" t-as="line">
+                                    <td><span t-field="line.part_id.name"/></td>
+                                    <td><span t-field="line.quantity"/></td>
+                                    <td><span t-field="line.unit_price"/></td>
+                                    <td><span t-field="line.subtotal"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-sm" style="width: 300px; margin-left: auto;">
+                            <tr>
+                                <td>Parts Total</td>
+                                <td><span t-field="o.parts_total"/></td>
+                            </tr>
+                            <tr>
+                                <td>Labor Charges</td>
+                                <td><span t-field="o.labor_charges"/></td>
+                            </tr>
+                            <tr>
+                                <td>Discount %</td>
+                                <td><span t-field="o.discount_percent"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Total Amount</strong></td>
+                                <td><strong><span t-field="o.total"/></strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
+

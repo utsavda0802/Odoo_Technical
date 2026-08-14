@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_car_customer,car.customer,model_car_customer,base.group_user,1,1,1,1
+access_car_vehicle,car.vehicle,model_car_vehicle,base.group_user,1,1,1,1
+access_car_mechanic,car.mechanic,model_car_mechanic,base.group_user,1,1,1,1
+access_spare_part,spare.part,model_spare_part,base.group_user,1,1,1,1
+access_job_type,job.type,model_job_type,base.group_user,1,1,1,1
+access_job_card,job.card,model_job_card,base.group_user,1,1,1,1
+access_job_card_part_line,job.card.part.line,model_job_card_part_line,base.group_user,1,1,1,1
+access_bulk_close_wizard,bulk.close.wizard,model_bulk_close_wizard,base.group_user,1,1,1,1
+access_job_payment,job.payment,model_job_payment,base.group_user,1,1,1,1
+access_job_payment_wizard,job.payment.wizard,model_job_payment_wizard,base.group_user,1,1,1,1
+access_job_invoice,job.invoice,model_job_invoice,base.group_user,1,1,1,1
+access_job_invoice_line,job.invoice.line,model_job_invoice_line,base.group_user,1,1,1,1

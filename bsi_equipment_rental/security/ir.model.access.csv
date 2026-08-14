@@ -2,4 +2,6 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_rental_equipment,rental.equipment,model_rental_equipment,base.group_user,1,1,1,1
 access_rental_order,rental.order,model_rental_order,base.group_user,1,1,1,1
 access_rental_order_line,rental.order.line,model_rental_order_line,base.group_user,1,1,1,1
-access_rental_handover,rental.handover,model_rental_handover,base.group_user,1,1,0,0
+access_rental_handover,rental.handover,model_rental_handover,base.group_user,1,1,1,0
+access_rental_customer,rental.customer,model_rental_customer,base.group_user,1,1,1,1
+access_rental_return_wizard,rental.return.wizard,model_rental_return_wizard,base.group_user,1,1,1,1

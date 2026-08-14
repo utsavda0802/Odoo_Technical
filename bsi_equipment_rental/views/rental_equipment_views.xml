@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="view_rental_equipment_list" model="ir.ui.view">
         <field name="name">rental.equipment.list</field>
@@ -7,11 +8,8 @@
                 <field name="code"/>
                 <field name="name"/>
                 <field name="category"/>
-                <field name="status" decoration-success="status == 'available'"
-                       decoration-danger="status == 'rented'"
-                       decoration-warning="status == 'maintenance'"/>
+                <field name="status"/>
                 <field name="price_per_day"/>
-                <field name="security_deposit"/>
             </list>
         </field>
     </record>
@@ -22,21 +20,13 @@
         <field name="arch" type="xml">
             <form string="Equipment">
                 <sheet>
-                    <widget name="web_ribbon" title="Rented" bg_color="text-bg-danger"
-                            invisible="status != 'rented'"/>
-                    <widget name="web_ribbon" title="Maintenance" bg_color="text-bg-warning"
-                            invisible="status != 'maintenance'"/>
                     <group>
-                        <group>
-                            <field name="name"/>
-                            <field name="code"/>
-                            <field name="category"/>
-                        </group>
-                        <group>
-                            <field name="status"/>
-                            <field name="price_per_day"/>
-                            <field name="security_deposit"/>
-                        </group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="category"/>
+                        <field name="status"/>
+                        <field name="price_per_day"/>
+                        <field name="security_deposit"/>
                     </group>
                 </sheet>
             </form>

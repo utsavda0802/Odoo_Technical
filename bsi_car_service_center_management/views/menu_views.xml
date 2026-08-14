@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+	<menuitem id="menu_car_service_root" name="Car Service"/>
+
+	<menuitem id="menu_job_card" name="Job Cards" parent="menu_car_service_root" action="action_job_card" sequence="1"/>
+
+	<menuitem id="menu_master_data" name="Master Data" parent="menu_car_service_root" sequence="10"/>
+
+	<menuitem id="menu_car_customer" name="Customers" parent="menu_master_data" action="action_car_customer" sequence="1"/>
+
+	<menuitem id="menu_car_vehicle" name="Vehicles" parent="menu_master_data" action="action_car_vehicle" sequence="2"/>
+
+	<menuitem id="menu_car_mechanic" name="Mechanics" parent="menu_master_data" action="action_car_mechanic" sequence="3"/>
+
+	<menuitem id="menu_spare_part" name="Spare Parts" parent="menu_master_data" action="action_spare_part" sequence="4"/>
+
+	<menuitem id="menu_job_type" name="Job Types" parent="menu_master_data" action="action_job_type" sequence="5"/>
+
+	<menuitem id="menu_job_invoice" name="Invoices" parent="menu_master_data" action="action_job_invoice" sequence="6"/>
+
+</odoo>

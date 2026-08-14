@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+	<record id="view_spare_part_list" model="ir.ui.view">
+		<field name="name">spare.part.list</field>
+		<field name="model">spare.part</field>
+		<field name="arch" type="xml">
+			<list editable="bottom">
+				<field name="name"/>
+				<field name="stock_qty"/>
+				<field name="unit_price"/>
+			</list>
+		</field>
+	</record>
+
+	<record id="action_spare_part" model="ir.actions.act_window">
+		<field name="name">Spare Parts</field>
+		<field name="res_model">spare.part</field>
+		<field name="view_mode">list,form</field>
+	</record>
+</odoo>

@@ -5,7 +5,7 @@ class RentalEquipment(models.Model):
     _description = 'Rental Equipment'
 
     name = fields.Char(string='Equipment Name', required=True)
-    code = fields.Char(string='Equipment Code', required=True)
+    code = fields.Char(string='Equipment Code')
     category = fields.Selection([
         ('camera', 'Camera'),
         ('drone', 'Drone'),
@@ -16,17 +16,10 @@ class RentalEquipment(models.Model):
     status = fields.Selection([
         ('available', 'Available'),
         ('rented', 'Rented'),
-        ('maintenance', 'Under Maintenance'),
     ], string='Status', default='available')
 
-    price_per_day = fields.Float(string='Price per Day (₹)')
-    security_deposit = fields.Float(string='Security Deposit (₹)')
+    price_per_day = fields.Float(string='Price per Day')
+    security_deposit = fields.Float(string='Security Deposit')
 
-    _code_unique = models.Constraint(
-        'UNIQUE(code)',
-        'Equipment code must be unique!',
-    )
-    _deposit_positive = models.Constraint(
-        'CHECK(security_deposit >= 0)',
-        'Security deposit cannot be negative!',
-    )
+    _code_unique = models.Constraint('UNIQUE(code)','Equipment code must be unique')
+    _deposit_positive = models.Constraint('CHECK(security_deposit >= 0)', 'SECURITY DEPOSIT CANNOT BE NEGATIVE')

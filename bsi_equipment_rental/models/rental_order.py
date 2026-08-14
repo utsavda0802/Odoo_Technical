@@ -2,58 +2,83 @@ from datetime import timedelta
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
+
 class RentalOrder(models.Model):
     _name = 'rental.order'
-    _description = 'Equipment Rental Order'
+    _description = 'Rental Order'
     _inherit = ['mail.thread']
-    _rec_name = 'name'
 
-    name = fields.Char(string='Rental Reference', default='New', copy=False)
-
-    partner_id = fields.Many2one(
-        'res.partner', string='Customer', required=True,
-        domain="[('is_rental_customer', '=', True)]"
-    )
-
-    phone = fields.Char(string='Phone')
-    email = fields.Char(string='Email')
+    name = fields.Char(string='Rental Reference')
+    partner_id = fields.Many2one('rental.customer', string='Customer', ondelete='restrict')
+    phone = fields.Char(string="Customer Mobile No.")
+    email = fields.Char(string="Customer Email Id")
 
     start_date = fields.Date(string='Start Date', default=fields.Date.today)
     rental_days = fields.Integer(string='Rental Days', default=1)
-    return_date = fields.Date(
-        string='Expected Return Date', compute='_compute_return_date',
-        store=True, readonly=False
-    )
+    return_date = fields.Date(string='Return Date', compute='_compute_return_date', store=True, readonly=False)
 
     line_ids = fields.One2many('rental.order.line', 'rental_id', string='Rental Lines')
 
     discount = fields.Float(string='Discount (%)', default=0.0)
-
-    express_charge = fields.Float(
-        string='Express Charge (10%)', compute='_compute_total_amount', store=True
-    )
-
-    total_amount = fields.Float(
-        string='Total Amount', compute='_compute_total_amount',
-        store=True, aggregator='sum'
-    )
-
     urgent_delivery = fields.Boolean(string='Urgent Delivery')
+    total_amount = fields.Float(string='Total Amount', compute='_compute_total_amount', store=True)
 
     state = fields.Selection([
         ('draft', 'Draft'),
         ('confirmed', 'Confirmed'),
         ('returned', 'Returned'),
-        ('cancelled', 'Cancelled'),
     ], string='Status', default='draft', tracking=True)
+
+
+    # Wizards
+
+    actual_return_date = fields.Date(string='Actual Return Date')
+    return_condition = fields.Selection([
+        ('good', 'Good'),
+        ('damaged', 'Damaged'),
+    ], string='Return Condition')
+    damage_note = fields.Text(string='Damage Note')
+
+    @api.onchange("partner_id")
+    def _onchange_partner_id(self):
+        if self.partner_id:
+            self.phone = self.partner_id.phone
+            self.email = self.partner_id.email
+            if not self.partner_id.is_customer:
+                return {
+                    'warning': {
+                        'title': "Not a Customer",
+                        'message': f"{self.partner_id.name} is not marked as a customer."
+                    }
+                }
+        else:
+            self.phone = False
+            self.email = False
+
+    @api.constrains('partner_id')
+    def _check_partner_is_customer(self):
+        for rec in self:
+            if rec.partner_id and not rec.partner_id.is_customer:
+                raise ValidationError(
+                    f"Cannot create a rental for '{rec.partner_id.name}' — this contact is not marked as a customer."
+                )
+
+    @api.onchange("phone", "email")
+    def _onchange_update_customer(self):
+        if self.partner_id:
+            self.partner_id.write({
+                "phone": self.phone,
+                "email": self.email,
+            })
 
     @api.depends('line_ids.amount', 'discount', 'urgent_delivery')
     def _compute_total_amount(self):
         for rec in self:
             subtotal = sum(rec.line_ids.mapped('amount'))
             after_discount = subtotal - (subtotal * rec.discount / 100)
-            rec.express_charge = after_discount * 0.10 if rec.urgent_delivery else 0.0
-            rec.total_amount = after_discount + rec.express_charge
+            if rec.urgent_delivery:
+                after_discount += after_discount * 0.10
+            rec.total_amount = after_discount
 
     @api.depends('start_date', 'rental_days')
     def _compute_return_date(self):
@@ -61,14 +86,9 @@ class RentalOrder(models.Model):
             if rec.start_date and rec.rental_days:
                 rec.return_date = rec.start_date + timedelta(days=rec.rental_days)
 
-    @api.onchange('partner_id')
-    def _onchange_partner_id(self):
-        if self.partner_id:
-            self.phone = self.partner_id.phone
-            self.email = self.partner_id.email
-
     @api.onchange('return_date')
     def _onchange_return_date(self):
+        print('rental_days')
         if self.start_date and self.return_date:
             delta = (self.return_date - self.start_date).days
             if delta >= 0 and delta != self.rental_days:
@@ -96,25 +116,14 @@ class RentalOrder(models.Model):
             if rec.start_date and rec.return_date and rec.return_date < rec.start_date:
                 raise ValidationError("Return date cannot be before the start date.")
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            if vals.get('name', 'New') == 'New':
-                vals['name'] = self.env['ir.sequence'].next_by_code('rental.order') or 'New'
-        return super().create(vals_list)
-
     def action_confirm(self):
         for rec in self:
             if not rec.line_ids:
                 raise ValidationError("Cannot confirm a rental with zero lines.")
-
             rec.state = 'confirmed'
-
             for line in rec.line_ids:
                 line.equipment_id.status = 'rented'
-
-            for line in rec.line_ids:
-                self.env['rental.handover'].sudo().create({
+                self.env['rental.handover'].create({
                     'rental_id': rec.id,
                     'partner_id': rec.partner_id.id,
                     'equipment_id': line.equipment_id.id,
@@ -127,6 +136,13 @@ class RentalOrder(models.Model):
             for line in rec.line_ids:
                 line.equipment_id.status = 'available'
 
-    def action_cancel(self):
-        self.write({'state': 'cancelled'})
-
+    def action_open_return_wizard(self):
+        self.ensure_one()
+        return {
+            'name': 'Return Equipment',
+            'type': 'ir.actions.act_window',
+            'res_model': 'rental.return.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'default_rental_id': self.id},
+        }

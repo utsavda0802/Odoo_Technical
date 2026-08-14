@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="view_rental_order_list" model="ir.ui.view">
         <field name="name">rental.order.list</field>
@@ -8,10 +9,7 @@
                 <field name="partner_id"/>
                 <field name="start_date"/>
                 <field name="return_date"/>
-                <field name="state" decoration-info="state == 'draft'"
-                       decoration-success="state == 'confirmed'"
-                       decoration-muted="state == 'returned'"/>
-                <!-- Req 6: sum="Total" makes it show a grouped/summed total in list footer -->
+                <field name="state"/>
                 <field name="total_amount" sum="Total"/>
             </list>
         </field>
@@ -23,22 +21,14 @@
         <field name="arch" type="xml">
             <form string="Rental Order">
                 <header>
-                    <button name="action_confirm" string="Confirm" type="object"
-                            class="oe_highlight" invisible="state != 'draft'"/>
-                    <button name="action_mark_returned" string="Mark Returned" type="object"
-                            class="oe_highlight" invisible="state != 'confirmed'"/>
-                    <button name="action_cancel" string="Cancel" type="object"
-                            invisible="state not in ('draft', 'confirmed')"/>
-                    <field name="state" widget="statusbar"
-                           statusbar_visible="draft,confirmed,returned"/>
+                    <button name="action_confirm" string="Confirm" type="object"/>
+                    <button name="action_open_return_wizard" string="Return Equipment" type="object"/>
+                    <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
-                    <div class="oe_title">
-                        <h1><field name="name" readonly="1"/></h1>
-                    </div>
                     <group>
                         <group>
-                            <!-- Req 1: domain restricts dropdown to customers only -->
+                            <field name="name"/>
                             <field name="partner_id"/>
                             <field name="phone"/>
                             <field name="email"/>
@@ -50,32 +40,25 @@
                             <field name="urgent_delivery"/>
                         </group>
                     </group>
-
                     <notebook>
                         <page string="Rental Lines">
                             <field name="line_ids">
                                 <list editable="bottom">
-                                    <!-- Req 2: domain restricts to Available equipment only -->
                                     <field name="equipment_id"/>
                                     <field name="quantity"/>
                                     <field name="price_per_day"/>
-                                    <field name="days" readonly="1"/>
-                                    <!-- Req 5: amount is computed, never typed -->
-                                    <field name="amount" readonly="1" sum="Total"/>
+                                    <field name="days"/>
+                                    <field name="amount"/>
                                 </list>
                             </field>
                         </page>
                     </notebook>
-
-                    <group class="oe_subtotal_footer oe_right">
+                    <group>
                         <field name="discount"/>
-                        <field name="express_charge" readonly="1" invisible="not urgent_delivery"/>
-                        <field name="total_amount" readonly="1"/>
+                        <field name="total_amount"/>
                     </group>
                 </sheet>
 
-                <!-- Req 11: chatter shows the status-change history log automatically
-                     because state has tracking=True and the model inherits mail.thread -->
                 <chatter/>
             </form>
         </field>
@@ -89,9 +72,6 @@
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="total_amount"/>
-                <filter string="Draft" name="filter_draft" domain="[('state','=','draft')]"/>
-                <filter string="Confirmed" name="filter_confirmed" domain="[('state','=','confirmed')]"/>
-                <separator/>
                 <group>
                     <filter string="Customer" name="groupby_partner" context="{'group_by': 'partner_id'}"/>
                     <filter string="Status" name="groupby_state" context="{'group_by': 'state'}"/>
@@ -99,7 +79,7 @@
             </search>
         </field>
     </record>
-
+    
     <record id="action_rental_order" model="ir.actions.act_window">
         <field name="name">Rental Orders</field>
         <field name="res_model">rental.order</field>
@@ -107,3 +87,4 @@
         <field name="search_view_id" ref="view_rental_order_search"/>
     </record>
 </odoo>
+

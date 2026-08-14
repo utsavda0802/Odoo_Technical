@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_job_invoice" model="ir.actions.report">
+        <field name="name">Job Invoice</field>
+        <field name="model">job.invoice</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">bsi_car_service_center_management.report_job_invoice_document</field>
+        <field name="report_file">bsi_car_service_center_management.report_job_invoice_document</field>
+        <field name="print_report_name">'Invopice - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_job_card"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

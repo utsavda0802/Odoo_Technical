@@ -1,12 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="menu_rental_root" name="Equipment Rental" sequence="10"/>
-
-    <menuitem id="menu_rental_orders" name="Rental Orders"
-              parent="menu_rental_root" action="action_rental_order" sequence="10"/>
-
-    <menuitem id="menu_rental_equipment" name="Equipment"
-              parent="menu_rental_root" action="action_rental_equipment" sequence="20"/>
-
-    <menuitem id="menu_rental_handover" name="Handovers"
-              parent="menu_rental_root" action="action_rental_handover" sequence="30"/>
+	<menuitem id="menu_rental_root" name="Rental Management" />
+	<menuitem id="menu_rental_order" name="Rental Orders" parent="menu_rental_root" action="action_rental_order"/>
+  <menuitem id="menu_rental_equipment" name="Equipment" parent="menu_rental_root" action="action_rental_equipment"/>
+	<menuitem id="menu_rental_handover" name="Handovers" parent="menu_rental_root" action="action_rental_handover"/>
 </odoo>
