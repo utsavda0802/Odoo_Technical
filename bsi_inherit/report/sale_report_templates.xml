@@ -1,0 +1,74 @@
+<odoo>
+	<template id="report_saleorder_document_inheit_custom" inherit_id="sale.report_saleorder_document">
+		<xpath expr="//div[@id='informations']" position="after">
+			<div class="row mt-2 mb-2" t-if="doc.custom_name">
+				<div class="col-6">
+					<strong>Custom Name :-</strong>
+					<p t-field="doc.custom_name"/>
+				</div>
+			</div>
+		</xpath>
+		<xpath expr="//thead//th[@name='th_priceunit']" position="after">
+			<th class="text-end">Custom Weight</th>
+		</xpath>
+		<xpath expr="//td[@name='td_product_priceunit']" position="after">
+		    <td class="text-end">
+		        <span t-field="line.custom_weight"/>
+		    </td>
+		</xpath>
+		<xpath expr="//div[@name='so_total_summary']" position="before">
+			<t t-set="past_orders" t-value="doc.partner_id.sale_order_ids.filtered(lambda o: o.id != doc.id)"/>
+			<table class="table table-sm" style="margin-top: 12px;">
+				<thead>
+					<tr>
+						<th>Sr. No.</th>
+						<th>Quotation No.</th>
+						<th>Custom Name</th>
+						<th>Order Date</th>
+						<th>Status</th>
+						<th class="text-end">Untaxed Amount</th>
+						<th class="text-end">Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr t-foreach="past_orders" t-as="past_order">
+						<td><span t-esc="past_order_index + 1"/></td>
+						<td><span t-field="past_order.name"/></td>
+						<td><span t-field="past_order.custom_name"/></td>
+						<td><span t-field="past_order.date_order"/></td>
+						<td><span t-field="past_order.state"/></td>
+						<td class="text-end"><span t-field="past_order.amount_untaxed"/></td>
+						<td class="text-end"><span t-field="past_order.amount_total"/></td>
+					</tr>
+				</tbody>
+			</table>
+		</xpath>
+		<xpath expr="//div[@name='so_total_summary']" position="before">
+			<t t-set="other_orders" t-value="env['sale.order'].search([('partner_id','!=',doc.partner_id.id),('id','!=',doc.id)])"/>
+			<table class="table table-sm" style="margin-top: 12px;">
+				<thead>
+					<tr>
+						<th>Sr. No.</th>
+						<th>Quotation No.</th>
+						<th>Custom Name</th>
+						<th>Order Date</th>
+						<th>Status</th>
+						<th class="text-end">Untaxed Amount</th>
+						<th class="text-end">Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr t-foreach="other_orders" t-as="other_order">
+						<td><span t-esc="other_order_index + 1"/></td>
+						<td><span t-field="other_order.name"/></td>
+						<td><span t-field="other_order.custom_name"/></td>
+						<td><span t-field="other_order.date_order"/></td>
+						<td><span t-field="other_order.state"/></td>
+						<td class="text-end"><span t-field="other_order.amount_untaxed"/></td>
+						<td class="text-end"><span t-field="other_order.amount_total"/></td>
+					</tr>
+				</tbody>
+			</table>
+		</xpath>
+	</template>
+</odoo>

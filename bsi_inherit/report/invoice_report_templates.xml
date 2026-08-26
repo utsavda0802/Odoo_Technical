@@ -1,0 +1,20 @@
+<odoo>
+	<template id="report_invoice_document_inherit_custom" inherit_id="account.report_invoice_document">
+		<xpath expr="//div[@id='informations']" position="before">
+			<div class="row mt-2 mb-2" t-if="o.custom_name">
+				<div class="col-6">
+					<strong>Custom Name:</strong>
+					<p t-field="o.custom_name"/>
+				</div>
+			</div>
+		</xpath>
+		<xpath expr="//thead//th[@name='th_priceunit']" position="after">
+			<th class="text-end">Custom Weight</th>
+		</xpath>
+		<xpath expr="//td[@name='td_price_unit']" position="after">
+			<td class="text-end">
+				<span t-field="line.custom_weight"/>
+			</td>
+		</xpath>
+	</template>
+</odoo>
