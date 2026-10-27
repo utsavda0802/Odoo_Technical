@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_report_asset" model="ir.actions.report">
+        <field name="name">Asset Report</field>
+        <field name="model">asset.asset</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">bsi_asset_tracking.report_asset</field>
+        <field name="report_file">bsi_asset_tracking.report_asset</field>
+        <field name="binding_model_id" ref="model_asset_asset"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_asset">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Asset <span t-field="o.tag"/></h2>
+                        <table class="table table-sm table-bordered">
+                            <tr>
+                                <th>Name</th>
+                                <td><span t-field="o.name"/></td>
+                            </tr>
+
+                            <tr>
+                                <th>Category</th>
+                                <td><span t-field="o.category_id"/></td>
+                            </tr>
+
+                            <tr>
+                                <th>Brand</th>
+                                <td><span t-field="o.brand"/></td>
+                            </tr>
+
+                            <tr>
+                                <th>Model</th>
+                                <td><span t-field="o.model_number"/></td>
+                            </tr>
+
+                            <tr>
+                                <th>Serial Number</th>
+                                <td><span t-field="o.serial_number"/></td>
+
+                            </tr>
+
+                            <tr>
+                                <th>Purchase Date</th>
+                                <td><span t-field="o.purchase_date"/></td>
+                            </tr>
+                            <tr>
+                                <th>Purchase Price</th>
+                                <td><span t-field="o.purchase_price"/></td>
+                            </tr>
+                            <tr>
+                                <th>Vendor</th>
+                                <td>
+                                    <span t-field="o.vendor"/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Warranty End Date</th>
+                                <td>
+                                    <span t-field="o.warranty_end_date"/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Warranty Status</th>
+                                <td>
+                                    <span t-if="o.warranty_expired">Expired</span>
+                                    <span t-else="">Valid</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Current Value</th>
+                                <td><span t-field="o.current_value"/></td>
+                            </tr>
+                            <tr>
+                                <th>Condition</th>
+                                <td><span t-field="o.condition"/></td>
+                            </tr>
+                            <tr>
+                                <th>Assined To</th>
+                                <td>
+                                    <span t-field="o.employee_id"/>
+                                </td>
+                            </tr>
+                            </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_asset_root" name="Asset Tracking" sequence="10"/>
+    <menuitem id="menu_asset" name="Assets" action="action_asset" parent="menu_asset_root" sequence="10"/>
+    <menuitem id="menu_asset_category" name="Categories" parent="menu_asset_root" action="action_asset_category" sequence="20"/>
+</odoo>

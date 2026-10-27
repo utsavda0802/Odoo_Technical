@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_asset_list" model="ir.ui.view">
+        <field name="name">asset.asset.list</field>
+        <field name="model">asset.asset</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="tag"/>
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="employee_id"/>
+                <field name="location"/>
+                <field name="condition"/>
+                <field name="purchase_price"/>
+                <field name="current_value"/>
+                <field name="warranty_expired"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_asset_form" model="ir.ui.view">
+        <field name="name">asset.asset.form</field>
+        <field name="model">asset.asset</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_set_good" string="Mark Good" type="object" class="btn-primary" invisible="condition != 'new'"/>
+                    <button name="action_set_fair" string="Mark Fair" type="object" invisible="condition != 'good'"/>
+                    <button name="action_set_poor" string="Mark Poor" type="object" invisible="condition != 'fair'"/>
+                    <button name="action_dispose" string="Dispose" type="object" invisible="condition == 'disposed'" groups="bsi_asset_tracking.group_asset_manager"/>
+                    <field name="condition" widget="statusbar" statusbar_visible="new,good,fair,poor,disposed"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-warning" role="alert" invisible="not warranty_expired">
+                        THE WARRANTY OF THIS ASSET HAS EXPIRED.
+                    </div>
+                    <h1>
+                        <field name="tag"/>
+                    </h1>
+                    <group>
+                        <group string="Asset Details">
+                            <field name="name"/>
+                            <field name="category_id"/>
+                            <field name="brand"/>
+                            <field name="model_number"/>
+                            <field name="serial_number"/>
+                        </group>
+                        <group string="Value">
+                            <field name="current_value"/>
+                        </group>
+                        <group string="Purchase Information">
+                            <field name="purchase_date"/>
+                            <field name="purchase_price"/>
+                            <field name="vendor"/>
+                            <field name="warranty_end_date"/>
+                            <field name="warranty_expired"/>
+                            <field name="warranty_days_remaining"/>
+                        </group>
+                        <group string="Assignment Information">
+                            <field name="employee_id"/>
+                            <field name="location"/>
+                            <field name="assigned_date"/>
+                            <field name="unassigned_date"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_asset_search" model="ir.ui.view">
+        <field name="name">asset.asset.search</field>
+        <field name="model">asset.asset</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="tag"/>
+                <field name="serial_number"/>
+                <filter name="unassigned" string="Unassigned" domain="[('employee_id', '=', False)]"/>
+                <filter name="warranty_expired" string="Warranty Expired" domain="[('warranty_end_date', '&lt;', datetime.now())]"/>
+                <filter name="in_repair" string="In Repair" domain="[('location', '=', 'in_repair')]"/>
+                <filter name="disposed" string="Disposed" domain="[('condition', '=', 'disposed')]"/>
+                <group>
+                    <filter name="group_category" string="Category" context="{'group_by':'category_id'}"/>
+                    <filter name="category" string="Category" context="{'group_by':'category_id'}"/>
+                    <filter name="group_condition" string="Condition" context="{'group_by':'condition'}"/>
+                    <filter name="group_location" string="Location" context="{'group_by':'location'}"/>
+                    <filter name="group_employee" string="Employee" context="{'group_by':'employee_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_asset" model="ir.actions.act_window">
+        <field name="name">Assets</field>
+        <field name="res_model">asset.asset</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

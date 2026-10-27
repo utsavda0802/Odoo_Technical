@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record id="action_report_bsi_employee" model="ir.actions.report">
+        <field name="name">Employee Report</field>
+        <field name="model">bsi.employee</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">bsi_employee_test_answer.report_employee_document</field>
+        <field name="report_file">bsi_employee_test_answer.report_employee_document</field>
+        <field name="binding_model_id" ref="model_bsi_employee"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_employee_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="employee">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Employee Report</h2>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Employee Name</th>
+                                <td><span t-field="employee.name"/></td>
+                            </tr>
+
+                            <tr>
+                                <th>Department</th>
+                                <td><span t-field="employee.department_id"/></td>
+                            </tr>
+
+                            <tr>
+                                <th>Designation</th>
+                                <td><span t-field="employee.designation"/></td>
+                            </tr>
+
+                            <tr>
+                              <th>Basic Salary</th>
+                                <td><span t-field="employee.basic_salary"/></td>
+                            </tr>
+
+                            <tr>
+                                <th>Annual Salary</th>
+                                <td><span t-field="employee.annual_salary"/></td>
+                            </tr>
+
+                            <tr>
+                                <th>Bonus</th>
+                                <td><span t-field="employee.bonus"/></td>
+                            </tr>
+
+                            <tr>
+                                <th>Status</th>
+                                <td><span t-field="employee.status"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+bsi_asset_tracking.access_asset_category,access_asset_category,bsi_asset_tracking.model_asset_category,base.group_user,1,1,1,1
+bsi_asset_tracking.access_asset_asset,access_asset_asset,bsi_asset_tracking.model_asset_asset,base.group_user,1,1,1,1
+bsi_asset_tracking.access_asset_assign_wizard,access_asset_assign_wizard,bsi_asset_tracking.model_asset_assign_wizard,base.group_user,1,1,1,1

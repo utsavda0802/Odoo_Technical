@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <menuitem id="menu_bsi_employee_root" name="Employee Management" sequence="10"/>
+
+    <record id="view_bsi_employee_list" model="ir.ui.view">
+        <field name="name">bsi.employee.list</field>
+        <field name="model">bsi.employee</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="employee_code"/>
+                <field name="name"/>
+                <field name="designation"/>
+                <field name="department_id"/>
+                <field name="basic_salary"/>
+                <field name="annual_salary"/>
+                <field name="bonus"/>
+                <field name="status"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_bsi_employee_form" model="ir.ui.view">
+        <field name="name">bsi.employee.form</field>
+        <field name="model">bsi.employee</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object" class="btn-primary" invisible="status != 'probation'"/>
+                    <button name="action_resign" string="Resign" type="object" class="btn-secondary" invisible="status != 'confirmed'"/>
+                    <field  name="status" widget="statusbar" statusbar_visible="probation,confirmed,resigned"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="employee_code"/>
+                            <field name="name"/>
+                            <field name="date_of_birth"/>
+                            <field name="joining_date"/>
+                        </group>
+                        <group>
+                            <field name="designation"/>
+                            <field name="department_id"/>
+                            <field name="basic_salary"/>
+                        </group>
+                    </group>
+                    <separator string="Salary Information"/>
+                    <group>
+                        <field name="annual_salary" readonly="1"/>
+                        <field name="bonus" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_bsi_employee_search" model="ir.ui.view">
+        <field name="name">bsi.employee.search</field>
+        <field name="model">bsi.employee</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="employee_code"/>
+                <field name="designation"/>
+                <field name="department_id"/>
+                <field name="status"/>
+                <separator/>
+                <filter name="probation" string="Probation" domain="[('status', '=', 'probation')]"/>
+                <filter name="confirmed" string="Confirmed" domain="[('status', '=', 'confirmed')]"/>
+                <filter name="resigned" string="Resigned" domain="[('status', '=', 'resigned')]"/>
+                <separator/>
+                <group>
+                    <filter name="group_department" string="Department" context="{'group_by': 'department_id'}"/>
+                    <filter name="group_status" string="Status" context="{'group_by': 'status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    
+    <record id="action_bsi_employee" model="ir.actions.act_window">
+        <field name="name">Employees</field>
+        <field name="res_model">bsi.employee</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem
+        id="menu_bsi_employee"
+        name="Employees"
+        parent="menu_bsi_employee_root"
+        action="action_bsi_employee"
+        sequence="10"
+    />
+
+</odoo>

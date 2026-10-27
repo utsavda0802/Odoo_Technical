@@ -1,0 +1,21 @@
+{
+    'name': 'BSI Employee Advanced',
+    'version': '19.0.1.0.0',
+    'category': 'Human Resources',
+    'summary': 'Employee test Advanced module',
+    'depends': ['base', 'mail'],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/ir_sequence_data.xml',
+        'data/ir_cron_data.xml',
+        'views/department_views.xml',
+        'views/employee_views.xml',
+        'views/menus.xml',
+        'wizard/salary_revision_wizard_views.xml',
+        'wizard/department_move_wizard_views.xml',
+        'report/employee_report.xml',
+    ],
+    'license': 'OPL-1',
+    'installable': True,
+    'application': True,
+}

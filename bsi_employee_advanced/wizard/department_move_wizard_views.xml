@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_test_department_move_wizard_form" model="ir.ui.view">
+        <field name="name">test.department.move.wizard.form</field>
+        <field name="model">test.department.move.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Move to Department">
+                <group>
+                    <field name="department_input"/>
+                    <field name="employee_ids" widget="many2many_tags"/>
+                </group>
+                <footer>
+                    <button name="action_move" string="Move" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_test_department_move_wizard" model="ir.actions.act_window">
+        <field name="name">Move to Department</field>
+        <field name="res_model">test.department.move.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_test_employee"/>
+        <field name="binding_view_types">list</field>
+    </record>
+</odoo>

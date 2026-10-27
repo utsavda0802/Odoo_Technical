@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_test_employee_user,test.employee.user,model_test_employee,base.group_user,1,1,1,1
+access_test_department_user,test.department.user,model_test_department,base.group_user,1,1,1,1
+bsi_employee_advanced.access_test_salary_revision_wizard,access_test_salary_revision_wizard,bsi_employee_advanced.model_test_salary_revision_wizard,base.group_user,1,1,1,1
+bsi_employee_advanced.access_test_department_move_wizard,access_test_department_move_wizard,bsi_employee_advanced.model_test_department_move_wizard,base.group_user,1,1,1,1

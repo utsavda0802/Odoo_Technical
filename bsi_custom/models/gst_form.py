@@ -23,7 +23,7 @@ class GstForm(models.Model):
 		for vals in vals_list:
 			if vals.get('name','New') == 'New':
 				today = fields.Date.context_today(self)
-				prefix = f"GST/{today:%M}/{today:%Y}"
+				prefix = f"GST/{today:%m}/{today:%Y}/"
 
 				last_record = self.search([('name','like',prefix)], order = 'id desc',limit=1)
 				if last_record:

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="group_asset_manager" model="res.groups">
+        <field name="name">Asset Manager</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="rule_asset_own" model="ir.rule">
+        <field name="name">Asset: Own assets only</field>
+        <field name="model_id" ref="model_asset_asset"/>
+        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="rule_asset_manager" model="ir.rule">
+        <field name="name">Asset: All assets for managers</field>
+        <field name="model_id" ref="model_asset_asset"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('bsi_asset_tracking.group_asset_manager'))]"/>
+    </record>
+</odoo>

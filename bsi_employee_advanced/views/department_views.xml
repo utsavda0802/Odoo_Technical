@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_test_department_list" model="ir.ui.view">
+        <field name="name">test.department.list</field>
+        <field name="model">test.department</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="manager_id"/>
+                <field name="yearly_salary_total"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_test_department_form" model="ir.ui.view">
+        <field name="name">test.department.form</field>
+        <field name="model">test.department</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="manager_id"/>
+                        <field name="yearly_salary_total"/>
+                    </group>
+                    <notebook>
+                        <page string="Employees">
+                            <field name="employee_ids" readonly="1">
+                                <list>
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                    <field name="status"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_test_department" model="ir.actions.act_window">
+        <field name="name">Departments</field>
+        <field name="res_model">test.department</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

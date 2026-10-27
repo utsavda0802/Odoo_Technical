@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_test_root" name="Employee Test" sequence="10"/>
+    <menuitem id="menu_test_employee" name="Employees" parent="menu_test_root"
+              action="action_test_employee" sequence="10"/>
+    <menuitem id="menu_test_department" name="Departments" parent="menu_test_root"
+              action="action_test_department" sequence="20"/>
+</odoo>
