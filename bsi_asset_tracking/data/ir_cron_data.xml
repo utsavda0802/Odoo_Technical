@@ -4,7 +4,7 @@
         <field name="name">Asset Warranty Reminder</field>
         <field name="model_id" ref="model_asset_asset"/>
         <field name="state">code</field>
-        <field name="code">model.cron_warranty_reminder()</field>
+        <field name="code">model._cron_warranty_reminder()</field>
         <field name="interval_number">1</field>
         <field name="interval_type">days</field>
         <field name="user_id" ref="base.user_root"/>

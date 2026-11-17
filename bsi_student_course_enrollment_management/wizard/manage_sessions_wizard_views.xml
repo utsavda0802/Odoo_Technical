@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- ===== Manage sessions (Requirement 8) ===== -->
+    <record id="view_training_manage_sessions_wizard_form" model="ir.ui.view">
+        <field name="name">training.manage.sessions.wizard.form</field>
+        <field name="model">training.manage.sessions.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Manage Sessions">
+                <group>
+                    <field name="course_id" readonly="1"/>
+                </group>
+                <field name="line_ids">
+                    <list editable="bottom">
+                        <field name="action"/>
+                        <field name="session_id" readonly="1"/>
+                        <field name="name"/>
+                        <field name="session_date"/>
+                        <field name="instructor"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_apply" string="Apply" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_training_manage_sessions_wizard" model="ir.actions.act_window">
+        <field name="name">Manage Sessions</field>
+        <field name="res_model">training.manage.sessions.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="student_edit_page" name="Edit Student">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container my-4" style="max-width: 600px;">
+                    <h1 class="mb-3">Edit Student</h1>
+
+                    <div t-if="error" class="alert alert-danger" role="alert">
+                        <t t-out="error"/>
+                    </div>
+
+                    <form t-attf-action="/students/#{student.id}/update" method="post">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="name">Name</label>
+                            <input type="text" id="name" name="name" class="form-control" required="required"
+                                   t-att-value="values.get('name')"/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" required="required"
+                                   t-att-value="values.get('email')"/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="age">Age</label>
+                            <input type="number" id="age" name="age" min="0" class="form-control"
+                                   t-att-value="values.get('age')"/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="status">Status</label>
+                            <select id="status" name="status" class="form-select">
+                                <t t-foreach="statuses" t-as="status_option">
+                                    <option t-att-value="status_option[0]"
+                                            t-att-selected="'selected' if status_option[0] == values.get('status') else None">
+                                        <t t-out="status_option[1]"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a t-attf-href="/students/#{student.id}" class="btn btn-link">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

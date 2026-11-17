@@ -131,12 +131,12 @@ class Asset(models.Model):
         self._move_condition('fair','poor')
 
     def action_dispose(self):
-        if not self.env.user.has_group(bsi_asset_tracking.group_asset_manager):
+        if not self.env.user.has_group('bsi_asset_tracking.group_asset_manager'):
             raise UserError("Only asset managers can dispose of assets.")
         for rec in self:
             if rec.condition == 'disposed':
                 raise UserError("This asset is already disposed.")
-            rec.write({employee_id: False, 'condition': 'disposed'})
+            rec.write({'employee_id': False, 'condition': 'disposed'})
 
     def _cron_warranty_reminder(self):
         today = fields.Date.today()

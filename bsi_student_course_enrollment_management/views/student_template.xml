@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="student_list_page" name="Student List">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container my-4">
+                    <h1 class="mb-3">Students</h1>
+
+                    <!-- ===== search form ===== -->
+                    <form action="/students" method="get" class="row g-2 mb-4">
+                        <div class="col-md-3">
+                            <input type="text" name="search" class="form-control"
+                                   placeholder="Name" t-att-value="search"/>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" name="age" min="0" class="form-control"
+                                   placeholder="Age" t-att-value="age"/>
+                        </div>
+                        <div class="col-md-3">
+                            <select name="course" class="form-select">
+                                <option value="">All courses</option>
+                                <t t-foreach="courses" t-as="course_option">
+                                    <option t-att-value="course_option.id"
+                                            t-att-selected="'selected' if str(course_option.id) == course else None">
+                                        <t t-out="course_option.name"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select name="status" class="form-select">
+                                <option value="">All status</option>
+                                <t t-foreach="statuses" t-as="status_option">
+                                    <option t-att-value="status_option[0]"
+                                            t-att-selected="'selected' if status_option[0] == status else None">
+                                        <t t-out="status_option[1]"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                            <a href="/students" class="btn btn-link">Reset</a>
+                        </div>
+                    </form>
+
+                    <p class="text-muted">
+                        Total students found: <t t-out="total"/>
+                    </p>
+
+                    <!-- ===== table ===== -->
+                    <t t-if="students">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Age</th>
+                                    <th>Status</th>
+                                    <th>Enrolled Courses</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="students" t-as="student">
+                                    <tr>
+                                        <td><t t-out="pager['offset'] + student_index + 1"/></td>
+                                        <td><a t-attf-href="/students/#{student.id}"><t t-out="student.name"/></a></td>
+                                        <td><t t-out="student.email"/></td>
+                                        <td><t t-out="student.age"/></td>
+                                        <td><span t-field="student.status"/></td>
+                                        <td>
+                                            <t t-foreach="student.course_ids" t-as="course">
+                                                <span class="badge text-bg-primary me-1" t-out="course.name"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <a t-if="can_edit"
+                                               t-attf-href="/students/#{student.id}/edit"
+                                               class="btn btn-sm btn-outline-primary">Edit</a>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <!-- ===== Previous / Next + page numbers ===== -->
+                        <div class="d-flex justify-content-center">
+                            <t t-call="website.pager"/>
+                        </div>
+                    </t>
+                    <p t-else="" class="text-muted">No students found.</p>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

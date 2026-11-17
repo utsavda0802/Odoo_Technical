@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <menuitem id="menu_training_root" name="Training"/>
+    <menuitem id="menu_training_course" name="Courses" action="action_training_course" parent="menu_training_root" sequence="1"/>
+    <menuitem id="menu_training_student" name="Students" action="action_training_student" parent="menu_training_root" sequence="2"/>
+    <menuitem id="menu_training_create_course_wizard" name="Create Course (Wizard)" parent="menu_training_root" action="action_training_create_course_wizard" sequence="15"/>
+</odoo>
